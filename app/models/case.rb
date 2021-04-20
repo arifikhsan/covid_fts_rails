@@ -1,6 +1,7 @@
 class Case
   include Mongoid::Document
   include Mongoid::Timestamps
+  field :key, type: Integer
   field :positive, type: Integer
   field :active, type: Integer
   field :recover, type: Integer
@@ -10,5 +11,5 @@ class Case
   field :recover_cumulative, type: Integer
   field :death_cumulative, type: Integer
   field :last_update, type: Integer
-  field :date_time, type: DateTime
+  field :datetime, type: String
 end

@@ -2,7 +2,8 @@ class CaseController < ApplicationController
   before_action :populate_cases
 
   def index
-    @cases = Case.all
+    a_month_ago = (Time.now - 1.month).utc.iso8601
+    @cases = Case.where(:datetime.gte => a_month_ago).to_a
 
     binding.pry
 

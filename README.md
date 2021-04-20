@@ -20,3 +20,5 @@ rails generate model case positive:integer active:integer recover:integer death:
 "datetime": "2020-03-02T00:00:00.000Z"
 }
 ```
+"2020-03-02T00:00:00.000Z"
+Time.now.utc.iso8601
