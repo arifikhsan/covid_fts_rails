@@ -1,24 +1,22 @@
-# README
+# COVID-19 Fuzzy Time Series Prediction
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Model
 
-Things you may want to cover:
+rails generate model case positive:integer active:integer recover:integer death:integer positive_cumulative:integer active_cumulative:integer recover_cumulative:integer death_cumulative:integer last_update:integer date_time:date_time
 
-* Ruby version
+## Case
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```json
+{
+"positive": 2,
+"active": 2,
+"recover": 0,
+"death": 0,
+"positive_cumulative": 2,
+"active_cumulative": 2,
+"recover_cumulative": 0,
+"death_cumulative": 0,
+"last_update": 1583107200000,
+"datetime": "2020-03-02T00:00:00.000Z"
+}
+```
