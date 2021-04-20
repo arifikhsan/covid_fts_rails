@@ -11,5 +11,5 @@ class Case
   field :recover_cumulative, type: Integer
   field :death_cumulative, type: Integer
   field :last_update, type: Integer
-  field :datetime, type: String
+  field :date_time, type: String
 end
