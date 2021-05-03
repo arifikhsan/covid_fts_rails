@@ -9,7 +9,9 @@ class CasesController < ApplicationController
   private
 
   def populate_cases
-    return unless Case.count.zero?
+    # TODO: cek jika ada kasus yang baru,
+    # jika ada yang baru, maka ambil semua data
+    # return unless Case.count.zero?
 
     response = Excon.get('https://covid-fts-next.vercel.app/api/daily')
     cases_json = JSON.parse(response.body)
