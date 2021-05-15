@@ -6,7 +6,7 @@ class CasesController < ApplicationController
     populate_new if Case.count.zero?
     sync unless data_uptodate?
 
-    @cases = Case.where(:date_time.gte => a_month_ago).to_a
+    @cases = Case.where(:date_time.gte => a_month_ago).limit(30).to_a
   end
 
   private
