@@ -1,0 +1,3 @@
+Style/EndOfLine:
+  Enabled: False
+  # EnforcedStyle: lf
