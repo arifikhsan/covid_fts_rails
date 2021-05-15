@@ -4,7 +4,7 @@ class CasesController < ApplicationController
   # jika tidak, maka ambil dari database sebanyak 30 hari
   def index
     populate_new if Case.count.zero?
-    sync unless is_data_uptodate?
+    sync unless data_uptodate?
 
     @cases = Case.where(:date_time.gte => a_month_ago).to_a
   end
@@ -16,12 +16,10 @@ class CasesController < ApplicationController
   end
 
   def sync
-    remote_cases.map do |item|
-      Case.new(item).upsert
-    end
+    remote_cases.map { |item| Case.new(item).upsert }
   end
 
-  def is_data_uptodate?
+  def data_uptodate?
     # kasus terakhir adalah kemarin atau hari ini
     Time.parse(Case.last.date_time) >= Time.now.yesterday
   end
