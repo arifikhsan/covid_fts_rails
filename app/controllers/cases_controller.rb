@@ -3,17 +3,12 @@ class CasesController < ApplicationController
   # jika kasus di database tanggalnya beda dengan tanggal saat ini, maka sinkronkan
   # jika tidak, maka ambil dari database sebanyak 30 hari
   def index
-    populate_new if Case.count.zero?
     sync unless data_uptodate?
 
     @cases = Case.where(:date_time.gte => a_month_ago).limit(30).to_a
   end
 
   private
-
-  def populate_new
-    Case.collection.insert_many(remote_cases)
-  end
 
   def sync
     remote_cases.map { |item| Case.new(item).upsert }
