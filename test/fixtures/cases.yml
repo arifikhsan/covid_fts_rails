@@ -1,25 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  positive: 1
-  active: 1
-  recover: 1
-  death: 1
-  positive_cumulative: 1
-  active_cumulative: 1
-  recover_cumulative: 1
-  death_cumulative: 1
-  last_update: 1
-  date_time: "2020-03-03T00:00:00.00Z"
+# one:
+#   positive: 1
+#   active: 1
+#   recover: 1
+#   death: 1
+#   positive_cumulative: 1
+#   active_cumulative: 1
+#   recover_cumulative: 1
+#   death_cumulative: 1
+#   last_update: 1
+#   date_time: "2020-03-03T00:00:00.00Z"
 
-two:
-  positive: 2
-  active: 2
-  recover: 2
-  death: 2
-  positive_cumulative: 2
-  active_cumulative: 2
-  recover_cumulative: 2
-  death_cumulative: 2
-  last_update: 2
-  date_time: "2021-03-03T00:00:00.00Z"
+# two:
+#   positive: 2
+#   active: 2
+#   recover: 2
+#   death: 2
+#   positive_cumulative: 2
+#   active_cumulative: 2
+#   recover_cumulative: 2
+#   death_cumulative: 2
+#   last_update: 2
+#   date_time: "2021-03-03T00:00:00.00Z"
