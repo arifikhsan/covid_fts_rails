@@ -54,3 +54,5 @@ gem 'mongoid', '~> 7.2'
 gem 'excon', '~> 0.80.1'
 
 gem 'devise', '~> 4.8'
+
+gem "rack-cors", "~> 1.1"
