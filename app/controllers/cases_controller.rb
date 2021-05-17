@@ -16,7 +16,32 @@ class CasesController < ApplicationController
   end
 
   def sync
-    remote_cases.map { |item| Case.where(key: item['key']).update(item) }
+    remote = remote_cases
+    local = Case.all.to_a
+
+    # add if not exists
+    remote.map do |remote_item|
+      local_item = local.find { |i| i['key'] == remote_item['key'] }
+
+      Case.collection.insert_one(remote_item) if local_item.nil?
+    end
+
+    # update if different
+    a_month_from_remote = remote.sort_by { |i| i['key'] }.last(30)
+    a_month_from_local = Case.order_by(key: :desc).limit(30).reverse.to_a
+    a_month_from_remote.zip(a_month_from_local).each do |r, l|
+      next unless r['positive'] != l['positive'] ||
+                  r['active'] != l['active'] ||
+                  r['recover'] != l['recover'] ||
+                  r['death'] != l['death'] ||
+                  r['positive_cumulative'] != l['positive_cumulative'] ||
+                  r['active_cumulative'] != l['active_cumulative'] ||
+                  r['recover_cumulative'] != l['recover_cumulative'] ||
+                  r['death_cumulative'] != l['death_cumulative'] ||
+                  r['last_update'] != l['last_update']
+
+      Case.find_by(key: l['key']).update(r)
+    end
   end
 
   def data_uptodate?
