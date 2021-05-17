@@ -15,7 +15,7 @@ class CasesControllerTest < ActionDispatch::IntegrationTest
   test 'should return success with data when database is not updated' do
     Case.collection.drop
     get cases_path
-    Case.last.destroy
+    Case.order_by(key: :desc).first.destroy
     get cases_path
     cases = JSON.parse(response.body)['cases']
 
@@ -28,7 +28,7 @@ class CasesControllerTest < ActionDispatch::IntegrationTest
   test 'should return success with data when database is updated' do
     Case.collection.drop
     get cases_path
-    Case.last.update(date_time: Time.now)
+    Case.order_by(key: :desc).first.update(date_time: Time.now)
     get cases_path
 
     cases = JSON.parse(response.body)['cases']
