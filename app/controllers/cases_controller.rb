@@ -1,6 +1,6 @@
 class CasesController < ApplicationController
   # jika database kosong, maka ambil baru
-  # jika kasus di database tanggalnya beda dengan tanggal saat ini, maka sinkronkan
+  # jika kasus di database tanggalnya lebih kecil dengan tanggal di remote, maka sinkronkan
   # jika tidak, maka ambil dari database sebanyak 30 hari
   def index
     populate_new if Case.count.zero?
@@ -46,7 +46,10 @@ class CasesController < ApplicationController
 
   def data_uptodate?
     # kasus terakhir adalah kemarin atau hari ini
-    Time.parse(Case.last.date_time).to_date >= Time.now.yesterday.to_date
+    # Time.parse(Case.last.date_time).to_date >= Time.now.yesterday.to_date
+
+    total = remote_total_cases
+    Time.parse(Case.last.date_time).to_date < Time.parse(total['updated_at']).to_date
   end
 
   def a_month_ago
@@ -54,14 +57,18 @@ class CasesController < ApplicationController
   end
 
   def remote_cases
-    get_from(covid_url)
+    get_from("#{base_url}/daily")
+  end
+
+  def remote_total_cases
+    get_from("#{base_url}/total")
   end
 
   def get_from(url)
     JSON.parse(Excon.get(url).body)
   end
 
-  def covid_url
-    'https://covid-fts-next.vercel.app/api/daily'
+  def base_url
+    'https://covid-fts-next.vercel.app/api'
   end
 end
