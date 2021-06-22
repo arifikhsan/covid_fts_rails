@@ -49,7 +49,7 @@ class CasesController < ApplicationController
     # Time.parse(Case.last.date_time).to_date >= Time.now.yesterday.to_date
 
     total = remote_total_cases
-    Time.parse(Case.last.date_time).to_date < Time.parse(total['updated_at']).to_date
+    Time.parse(Case.last.date_time).to_date >= Time.parse(total['updated_at']).to_date
   end
 
   def a_month_ago
