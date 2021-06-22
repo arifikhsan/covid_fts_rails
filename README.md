@@ -1,5 +1,7 @@
 # COVID-19 Fuzzy Time Series Prediction
 
+tes
+
 ## Model
 
 rails generate model case positive:integer active:integer recover:integer death:integer positive_cumulative:integer active_cumulative:integer recover_cumulative:integer death_cumulative:integer last_update:integer date_time:date_time
