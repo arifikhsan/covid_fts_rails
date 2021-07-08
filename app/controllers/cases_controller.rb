@@ -74,6 +74,6 @@ class CasesController < ApplicationController
   end
 
   def base_url
-    'https://covid-fts-next.vercel.app/api'
+    ENV['API_COVID_URL'] || 'https://covid-fts-next.vercel.app/api'
   end
 end
