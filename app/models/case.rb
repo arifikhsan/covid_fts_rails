@@ -10,6 +10,6 @@ class Case
   # field :positive_cumulative, type: Integer
   # field :recover_cumulative, type: Integer
   # field :death_cumulative, type: Integer
-  field :last_update, type: Integer
+  # field :last_update, type: Integer
   field :date_time, type: String
 end
