@@ -4,7 +4,7 @@ class CasesController < ApplicationController
   # jika tidak, maka ambil dari database sebanyak 30 hari
   def index
     populate_new if Case.count.zero?
-    sync unless data_uptodate?
+    sync unless data_up_to_date?
 
     @cases = Case.order_by(date_time: :desc).limit(30).to_a
   end
@@ -12,6 +12,9 @@ class CasesController < ApplicationController
   private
 
   def populate_new
+
+    # binding.pry
+
     Case.collection.insert_many(remote_cases)
   end
 
@@ -30,21 +33,23 @@ class CasesController < ApplicationController
     a_month_from_remote = remote.sort_by { |i| i['key'] }.last(30)
     a_month_from_local = Case.order_by(key: :desc).limit(30).reverse.to_a
     a_month_from_remote.zip(a_month_from_local).each do |r, l|
-      next unless r['positive'] != l['positive'] ||
-                  r['active'] != l['active'] ||
-                  r['recover'] != l['recover'] ||
-                  r['death'] != l['death'] ||
-                  r['positive_cumulative'] != l['positive_cumulative'] ||
-                  r['active_cumulative'] != l['active_cumulative'] ||
-                  r['recover_cumulative'] != l['recover_cumulative'] ||
-                  r['death_cumulative'] != l['death_cumulative'] ||
+      next unless r['active_cumulative'] != l['active_cumulative'] ||
                   r['last_update'] != l['last_update']
+
+      # r['active'] != l['active'] ||
+      # r['positive'] != l['positive'] ||
+      # r['recover'] != l['recover'] ||
+      # r['death'] != l['death'] ||
+      # r['positive_cumulative'] != l['positive_cumulative'] ||
+      # r['active_cumulative'] != l['active_cumulative'] ||
+      # r['recover_cumulative'] != l['recover_cumulative'] ||
+      # r['death_cumulative'] != l['death_cumulative']
 
       Case.find_by(key: l['key']).update(r)
     end
   end
 
-  def data_uptodate?
+  def data_up_to_date?
     # kasus terakhir adalah kemarin atau hari ini
     # Time.parse(Case.last.date_time).to_date >= Time.now.yesterday.to_date
 
