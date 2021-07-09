@@ -66,7 +66,7 @@ class CasesController < ApplicationController
   end
 
   def remote_total_cases
-    get_from("#{base_url}/total")
+    get_from("#{base_url}/last-update")
   end
 
   def get_from(url)
