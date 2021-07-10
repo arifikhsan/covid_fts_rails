@@ -12,10 +12,15 @@ class CasesController < ApplicationController
   private
 
   def populate_new
+    active_cases = remote_cases.map do |item|
+      {
+        key: item['key'],
+        active_cumulative: item['active_cumulative'],
+        date_time: item['date_time']
+      }
+    end
 
-    # binding.pry
-
-    Case.collection.insert_many(remote_cases)
+    Case.collection.insert_many(active_cases)
   end
 
   def sync
@@ -35,15 +40,6 @@ class CasesController < ApplicationController
     a_month_from_remote.zip(a_month_from_local).each do |r, l|
       next unless r['active_cumulative'] != l['active_cumulative'] ||
                   r['last_update'] != l['last_update']
-
-      # r['active'] != l['active'] ||
-      # r['positive'] != l['positive'] ||
-      # r['recover'] != l['recover'] ||
-      # r['death'] != l['death'] ||
-      # r['positive_cumulative'] != l['positive_cumulative'] ||
-      # r['active_cumulative'] != l['active_cumulative'] ||
-      # r['recover_cumulative'] != l['recover_cumulative'] ||
-      # r['death_cumulative'] != l['death_cumulative']
 
       Case.find_by(key: l['key']).update(r)
     end
