@@ -48,9 +48,10 @@ class CasesController < ApplicationController
   def data_up_to_date?
     # kasus terakhir adalah kemarin atau hari ini
     # Time.parse(Case.last.date_time).to_date >= Time.now.yesterday.to_date
-
     total = remote_total_cases
     Time.parse(Case.last.date_time).to_date >= Time.parse(total['updated_at']).to_date
+  rescue
+    false
   end
 
   def a_month_ago
